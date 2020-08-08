@@ -1,0 +1,348 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang16393\deflangfe16393{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.18362}{\*\mmathPr\mdispDef1\mwrapIndent1440 }\viewkind4\uc1 
+\pard\nowidctlpar\sa200\sl276\slmult1\b\f0\fs22\lang9       Assignment-3(DS)Searching                                                   *******************************\par
+
+\pard\nowidctlpar\fi-328\li328\sa200\sl276\slmult1\qj Question.1:\par
+
+\pard\nowidctlpar\fi-329\li329\sa200\sl276\slmult1\qj Program code-\par
+\b0 #include<stdio.h>\par
+int frequency(int a[],int n,int x)\par
+\{\par
+  int i,flag=1,c=0;\par
+  for(i=0;i<n;i++)\par
+  \{\par
+    if(a[i]==x)\par
+    \{\par
+    flag=0;\par
+    c++;\par
+    \}\par
+  \}\par
+   return c;\par
+ if(flag==1)\par
+  return -1;\par
+\}\par
+ int main()\par
+ \{\par
+     int a[100],n,i,t,p,s;\par
+     printf("\\nEnter the size of Array:");\par
+     scanf("%d",&n);\par
+     printf("\\nEnter the array element:");\par
+     for(i=0;i<n;i++)\par
+     \{\par
+         scanf("%d",&a[i]);\par
+     \}\par
+     t=frequency(a,n,2);\par
+     p=frequency(a,n,3);\par
+     s=frequency(a,n,5);\par
+      if(t==-1)\par
+      \{\par
+            printf("\\nFrequency not found because this element not in array");\par
+      \}\par
+       else\par
+       \{\par
+          printf("\\nFrequency of 2 is %d",t);\par
+          printf("\\nFrequency of 3 is %d",p);\par
+          printf("\\nFrequency of 5 is %d",s);\par
+       \}\par
+      return 0;\par
+\}\par
+\b INPUT-\b0\par
+Enter the size of Array:51\par
+Enter the array element:1 2 1 2 4  5 3 4 5 6 7 8 7 6 5 4 3 2 3 4 5 6 5 3 2 3 4 5 6 7 8 6 5 4 3 2 2 3 3 4 5 3 2 1 2 3 4 5 6 7 8\par
+\b OUTPUT-\b0\par
+Frequency of 2 is 8\par
+Frequency of 3 is 10\par
+Frequency of 5 is 9\par
+\b COMPLEXITY-\b0 O(n).\par
+\b Question.2:\par
+Program Code-\par
+\b0 #include<stdio.h>\par
+ int bin_search(int a[],int n,int x)\par
+\{\par
+  int m,l=0,u=n-1;\par
+  while(l<=u)\par
+  \{\par
+    m=(l+u)/2;\par
+    if(x==a[m])\par
+    \{\par
+    return m;\par
+    \}\par
+    else if(x>a[m])\par
+        l=m+1;\par
+    else\par
+        u=m-1;\par
+  \}\par
+  return -1;\par
+\}\par
+int jump_search(int a[],int n,int x)\par
+\{\par
+    int i=0,j,k;\par
+    j=sqrt(n);\par
+    while(a[j]<x&&j<n)\par
+          \{\par
+            i=j;\par
+            j+=sqrt(n);\par
+            if(i>n)\par
+                \{\par
+                    return -1;\par
+                \}\par
+          \}\par
+      for(k=i;k<=j;k++)\par
+      \{\par
+          if(a[k]==x)\par
+          \{\par
+              return k;\par
+          \}\par
+      \}\par
+      return -1;\par
+\}\par
+int main()\par
+\{\par
+ int a[100],n,i,x;\par
+ printf("\\nEnter the size of Array:");\par
+ scanf("%d",&n);\par
+ printf("\\nEnter the array in sorted order:");\par
+ for(i=0;i<n;i++)\par
+ \{\par
+ scanf("%d",&a[i]);\par
+ \}\par
+ printf("\\nEnter the element to search:");\par
+ scanf("%d",&x);\par
+ int t,p;\par
+ t=bin_search(a,n,x);\par
+ p=jump_search(a,n,x);\par
+ if(t==p&&t!=-1&&p!=-1)\par
+        printf("Binary search and Jump search result is equal at index %d",t);\par
+  else\par
+        printf("Element not found");\par
+\}\par
+\b INPUT-\b0\par
+Enter the size of Array:22\par
+Enter the array in sorted order:1 2 3 4 5 6 7 8 9 10 13 15 18 19 23 25 27 31 35 42 47 49\par
+Enter the element to search:13\par
+\b OUTPUT-\b0\par
+Binary search and Jump search result is equal at index 10\par
+\b COMPLEXITY-O\b0\{log(n)+n\super 2\nosupersub\}\b\par
+
+\pard\nowidctlpar\fi-328\li328\sl276\slmult1\qj Question.3:\par
+Program code-\par
+\b0 #include<stdio.h>\par
+int bin_search(int a[],int l ,int r,int x)\par
+\{\par
+    if(l>r)\par
+     return -1;\par
+    int d=l+(r)/2;\par
+    if(x==a[d])\par
+        return d;\par
+    else if(x<a[d])\par
+        return bin_search(a,l,d-1,x);\par
+    else\par
+        return bin_search(a,d+1,r,x);\par
+\}\par
+int exp_search(int a[],int n,int x)\par
+\{\par
+    int i=1;\par
+   while((i<n) && a[i]<x)\par
+        i*=2;\par
+   return bin_search(a,i/2,i,x);\par
+\}\par
+int c=1;\par
+int inte_search(int a[],int n, int x)\par
+\{\par
+    int l=0,h=(n-1),p;\par
+    while(c++ && l<=h && x>=a[l]&&x<=a[h])\par
+    \{\par
+        p=1+(((double)(h-1)/(a[h]-a[l]))*(x-a[l]));\par
+\par
+        if(c++ && a[p] == x)\par
+            return p;\par
+        if(c++ && a[p]<x)\par
+            l=p+1;\par
+        else\par
+        h = p-1;\par
+    \}\par
+   return -1;\par
+\}\par
+int main()\par
+\{\par
+    int a[50],n,x,i,t,p,opt;\par
+    printf("\\nEnter Array size:");\par
+    scanf("%d",&n);\par
+    printf("\\nEnter Array element in sorted order:");\par
+    for(i=0;i<n;i++)\par
+    \{\par
+        scanf("%d",&a[i]);\par
+    \}\par
+    printf("\\nEnter element to search:");\par
+    scanf("%d",&x);\par
+    printf("\\n1 Exponential Search\\n2 Interpolation Search\\n");\par
+    printf("Enter your choose:");\par
+    scanf("%d",&opt);\par
+    t=exp_search(a,n,x);\par
+    p=inte_search(a,n,x);\par
+    switch(opt)\par
+    \{\par
+    case 1:\par
+        \{\par
+            if(t==-1)\par
+                printf("\\nElement not found");\par
+            else\par
+                printf("\\nElement found at index %d in exponential search",t);\par
+                break;\par
+        \}\par
+    case 2:\par
+        \{\par
+            if(p==-1)\par
+            printf("\\nElement not found");\par
+            else\par
+            printf("\\nElement found at index %d in interpolation search",p);\par
+            break;\par
+        \}\par
+        break;\par
+\par
+    \}\par
+    return 0;\par
+\}\par
+\b INPUT-\b0\par
+Enter Array size:8\par
+Enter Array element in sorted order:1 2 34 54 56 78 79 99\par
+Enter element to search:56\par
+1 Exponential Search\par
+2 Interpolation Search\par
+Enter your choose:2\par
+\b OUTPUT-\b0\par
+Element found at index 4 in interpolation search\par
+\b Question.6:\par
+Program code-\par
+\b0 #include<stdio.h>\par
+int lin_search(int a[],int n,int x)\par
+\{\par
+    int flag=1,i;\par
+    for(i=0;i<n;i++)\par
+    \{\par
+        if(a[i]==x)\par
+        \{\par
+            flag=0;\par
+            return i;\par
+        \}\par
+    \}\par
+    if(flag==1)\par
+      return -1;\par
+\}\par
+ int bin_search(int a[],int n,int x)\par
+\{\par
+  int m,l=0,u=n-1;\par
+  while(l<=u)\par
+  \{\par
+    m=(l+u)/2;\par
+    if(x==a[m])\par
+    \{\par
+    return m;\par
+    \}\par
+    else if(x>a[m])\par
+        l=m+1;\par
+    else\par
+        u=m-1;\par
+  \}\par
+  return -1;\par
+\}\par
+int jump_search(int a[],int n,int x)\par
+\{\par
+    int i=0,j,k;\par
+    j=sqrt(n);\par
+    while(a[j]<x&&j<n)\par
+          \{\par
+\par
+              i=j;\par
+              j+=sqrt(n);\par
+              if(i>n)\par
+                \{\par
+                    return -1;\par
+                \}\par
+          \}\par
+      for(k=i;k<=j;k++)\par
+      \{\par
+          if(a[k]==x)\par
+          \{\par
+              return k;\par
+          \}\par
+      \}\par
+      return -1;\par
+\}\par
+int main()\par
+\{\par
+  int a[50],n,i,x;\par
+  printf("\\nEnter the size of Array:");\par
+  scanf("%d",&n);\par
+  printf("\\nEnter the array in sorted order:");\par
+  for(i=0;i<n;i++)\par
+  \{\par
+   scanf("%d",&a[i]);\par
+  \}\par
+  printf("Enter element to search:");\par
+  scanf("%d",&x);\par
+  int opt,t;\par
+  printf("Choose your option in searching \\n1 Linear Search \\n2 Binary Search \\n3 Jump Search\\n");\par
+  scanf("%d",&opt);\par
+  t=lin_search(a,n,x);\par
+  t=bin_search(a,n,x);\par
+  t=jump_search(a,n,x);\par
+  switch(opt)\par
+  \{\par
+  case 1:\par
+    \{\par
+      if(t==-1)\par
+      \{\par
+          printf("Element is not found in Linear search");\par
+      \}\par
+      else\par
+      \{\par
+          printf("Element is found at index %d in Linear search",t);\par
+      \}\par
+      break;\par
+    \}\par
+  case 2:\par
+    \{\par
+      if(t==-1)\par
+      \{\par
+          printf("Element is not found in Binary search");\par
+      \}\par
+      else\par
+      \{\par
+          printf("Element is found at index %d in Binary search.",t);\par
+      \}\par
+      break;\par
+    \}\par
+  case 3:\par
+    \{\par
+      if(t==-1)\par
+      \{\par
+          printf("Element is not found in jump search");\par
+      \}\par
+      else\par
+      \{\par
+          printf("Element is found at index %d in jump search.",t);\par
+      \}\par
+      break;\par
+    \}\par
+    break;\par
+  \}\par
+\}\par
+\b INPUT-\b0\par
+Enter the size of Array:22\par
+Enter the array in sorted order:1 2 3 4 5 6 7 8 9 10 13 15 18 19 23 25 27 31 35 42 47 49\par
+Enter element to search:15\par
+Choose your option in searching\par
+1 Linear Search\par
+2 Binary Search\par
+3 Jump Search\par
+3\par
+\b OUTPUT-\b0\par
+Element is found at index 11 in jump search.\par
+
+\pard\nowidctlpar\fi-328\li328\sa200\sl276\slmult1\b\par
+\par
+
+\pard\nowidctlpar\sa200\sl276\slmult1\b0\par
+}
+ 
