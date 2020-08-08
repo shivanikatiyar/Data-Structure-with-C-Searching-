@@ -1,0 +1,334 @@
+                                 Assignment -2(DS) Searching
+                               ********************************						
+ 1.    
+    [LINEAR SEARCH ALGORITHM]
+   ===========================
+Algorithm LINSEARCH(L[],N,ITEM):OR SEQSEARCH(L[],N,ITEM):
+The Algorithm find  an ITEM in the list L of N elements.
+1. [Intialize.]
+     Set Flag=1.
+2.  [Loop]
+       Repeat step 3 for i=0,1,2,3,....N-1
+3.  if L[k]==ITEM then:
+             (i)Set Flag=0
+			 (ii) write "Search Successful"
+4.  if Flag==1 then :Write "Search unsuccessful"
+5.  [Finished]
+      Exit.
+	 
+  [LINEAR SEARCH PROGRAM CODE]
+  -----------------------------
+  
+  #include<stdio.h>
+int lin_search(int a[],int n,int x)
+{
+    int flag=1,i;
+    for(i=0;i<n;i++)
+    {
+        if(a[i]==x)
+        {
+            flag=0;
+            return i;
+        }
+    }
+    if(flag==1)
+      return -1;
+}
+int main()
+{
+   int a[25],n,i,x,m;
+    printf("\nEnter Array size:");
+    scanf("%d",&n);
+    printf("\nEnter Array element:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("\nEnter element to search:");
+    scanf("%d",&x);
+    m = lin_search(a,n,x);
+    if(m == -1)
+       printf("Linear search unsuccessful");
+    else
+        printf("Linear search successful at index %d",m+1);
+}
+INPUT-
+Enter Array size:4
+Enter Array element:12 10 23 45
+Enter element to search:23
+OUTPUT-
+Linear search successful at index 3
+
+   [COMPLEXITY]
+  ----------------
+ Time Complexity = O(n)
+ Space Complexity =O(1)
+ 
+ 2.
+  [BINARY SEARCH ALGORITHM] 
+ ===========================
+   
+ Algorithm BINSEARCH(L[],N,ITEM):The algorithm find an ITEM in the sorted list L of N elements.
+1. [Initiailize]
+    Set l=0,Set u=N-1
+2. [Loop]
+    Repeat step 3 and 4 while u>=l
+3. [Get the mid point]
+    Set m=(l+u)/2
+4. if ITEM==L[m] then:
+   write"successful,ITEM Found"
+   else if ITEM>L[m] then:
+           Set l=m+1
+	else
+	    Set u=m-1
+	[End of loop]
+5.  [Finished]
+     Exit.
+	 
+   [BINARY SEARCH PROGRAM CODE] 
+  ------------------------------ 
+ #include<stdio.h>
+ int bin_search(int L[],int n,int item)
+{
+  int m,l=0,u=n-1;
+  while(l<=u)
+  {
+    m=(l+u)/2;
+    if(item==L[m])
+    {
+    return m;
+    }
+    else if(item>L[m])
+        l=m+1;
+    else
+        u=m-1;
+  }
+  return -1;
+}
+ int main()
+{
+    int L[25],i,n,m,item;
+    printf("\nEnter Array size:");
+    scanf("%d",&n);
+    printf("\nEnter Array element in sorted order:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&L[i]);
+    }
+    printf("\nEnter element to search:");
+    scanf("%d",&item);
+    m = bin_search(L,n,item);
+    if(m == -1)
+       printf("Linear search unsuccessful");
+    else
+       printf("Linear search successful at index %d",m+1);
+}
+INPUT-
+Enter Array size: 4
+Enter Array element in sorted order:12 23 45 67
+Enter element to search:67
+OUTPUT-
+Linear search successful at index 4
+
+	 [COMPLEXITY]
+	-------------- 
+ Time Complexity = O(log(n))
+ Space Complexity = O(1)
+ 
+ 3.
+     [JUMP SEARCH ALGORITHM]
+	========================== 
+1.Let us consider an array Arr[] of size N,X is the element to be found.
+2.Let intially i=0 and j=sqrt(N)
+3.Now we have to repeat step 4 and 5 until Arr[j]<X and j<=N-1
+4.Set i=j
+5.Set j=j+sqrt(N)
+6.Now we will use linear search between index i and j to find the index of the desired element x.
+
+    [JUMP SEARCH PROGRAM CODE]
+	---------------------------
+#include<stdio.h>
+int jump_search(int a[],int n,int x)
+{
+    int i=0,j,k;
+    j=sqrt(n);
+    while(a[j]<x&&j<n)
+          {
+
+              i=j;
+              j+=sqrt(n);
+              if(i>n)
+                {
+                    return -1;
+                }
+          }
+      for(k=i;k<=j;k++)
+      {
+          if(a[k]==x)
+          {
+              return k;
+          }
+      }
+      return -1;
+}
+int main()
+{
+    int a[50],n,x,i,t;
+    printf("Enter Array size:");
+    scanf("%d",&n);
+    printf("Enter Array element in sorted order:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("Enter element to search:");
+    scanf("%d",&x);
+    t=jump_search(a,n,x);
+    if(t==-1)
+    {
+        printf("Element not found.");
+    }
+    else
+    {
+        printf("Element found at index %d",t);
+    }
+    return 0;
+}	
+INPUT-
+Enter Array size:5
+Enter Array element in sorted order:12 34 56 78 90
+Enter element to search:56
+OUTPUT-
+Element found at index 2
+
+  [COMPLEXITY]
+  ------------
+Time complexity = O(sqrt(n))
+Time complexity = O(1)
+
+4.
+   [INTERPOLATION SEARCH ALGORITHM]
+   =================================
+
+1.Elements sorted & uniformed distributed
+2.Start index = 0,End index=n-1
+  where n=number of elements in array
+3.Position(p)=start+{(end-start)/(a[end]-a[start])}*(e-a[start])
+  where a[index] is value at in array at that index and
+  e=element you are searching for
+4.ifa[p]==e,then the element is found
+5.if e>a[p],then make start = p+1
+6.if e<a[p],then make start = p-1 
+
+   [INTERPOLATION SEARCH PROGRAM CODE]
+  -------------------------------------
+
+ #include<stdio.h>
+int c=1;
+
+int inte_search(int a[],int n, int x)
+{
+    int l=0,h=(n-1),p;
+    while(c++ && l<=h && x>=a[l]&&x<=a[h])
+    {
+        p=1+(((double)(h-1)/(a[h]-a[l]))*(x-a[l]));
+
+        if(c++ && a[p] == x)
+            return p;
+        if(c++ && a[p]<x)
+            l=p+1;
+        else
+        h = p-1;
+    }
+   return -1;
+}
+void main()
+{
+    int a[20],i,n,x,t;
+    printf("\nEnter Array size:");
+    scanf("%d",&n);
+    printf("\nEnter Array element in sorted order:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("\nEnter element to search:");
+    scanf("%d",&x);
+    t=inte_search(a,n,x);
+    if(t == -1)
+        printf("\nElement not found");
+    else
+        printf("\nElement found at index: %d",t+1);
+    printf("\nNumber of comparisons: %d",c-1);
+}
+INPUT-
+Enter Array size:5
+Enter Array element in sorted order:12 34 66 78 89
+
+Enter element to search:78
+OUTPUT-
+Element found at index: 4
+Number of comparisons: 2  
+
+  [COMPLEXITY]
+  ------------
+ Time Complexity = O(log(log(n)))
+ Space Complexity = O(1)
+  
+5.
+      
+    [EXPONENTIAL SEARCH PROGRAM CODE]
+   -------------------------------------
+
+#include<stdio.h>
+int bin_search(int a[],int l ,int r,int x)
+{
+    if(l>r)
+    return -1;
+    int d=(l+r)/2;
+    if(x==a[d])
+            return d;
+    else if (x<a[d])
+        return bin_search(a,l,d-1,x);
+    else
+        return bin_search(a,d+1,r,x);
+}
+int exp_search(int a[],int n,int x)
+{
+    int i=1;
+   while((i<n) && (a[i]<x))
+        i*=2;
+   return bin_search(a,i/2,i,x);
+}
+int main()
+{
+    int a[50],n,x,i,t;
+    printf("Enter Array size:");
+    scanf("%d",&n);
+    printf("Enter Array element in sorted order:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("Enter element to search:");
+    scanf("%d",&x);
+    t=exp_search(a,n,x);
+    if(t==-1)
+    {
+      printf("Element not found");
+    }
+    else
+    printf("The position of element is %d",t);
+}
+
+INPUT-
+Enter Array size:6
+Enter Array element in sorted order:12 34 56 67 78 99
+Enter element to search:67
+OUTPUT-
+The position of element is 3
+ 
+  [COMPLEXITY]
+  ------------
+Time Complexity-best-case O(1),average-case O(log(i)),where i is the location where search key is present.
+Space Complexity-O(1)
